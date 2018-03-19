@@ -1,0 +1,38 @@
+<link rel="import" href="../../../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../../../bower_components/paper-input/paper-input.html">
+<dom-module id="owl-breakscreen">
+	<template>
+		<style>
+			:host {
+			}
+			#show {
+				--paper-button: {
+					background-color: #5BA664;
+					color: white;
+				}
+			}
+			#hide {
+				--paper-button: {
+					background-color: #C9513E;
+					color: white;
+				}
+			}
+		</style>
+
+        
+            <paper-input id="breakScreenText" label="Break Screen Text"></paper-input>
+            <paper-button id="updateText" raised on-tap="updateBreakScreenText">
+                Update
+            </paper-button>
+        
+            <paper-button id="show" raised green on-tap="showBreakScreen">
+                Show
+            </paper-button>
+            <paper-button id="hide" raised red on-tap="hideBreakScreen">
+                Hide
+            </paper-button>
+        
+	</template>
+
+	<script src="owl-breakscreen.js"></script>
+</dom-module>

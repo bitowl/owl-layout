@@ -1,0 +1,24 @@
+<link rel="import" href="../../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="owl-follow-me-item.html">
+<dom-module id="owl-follow-me">
+    <template strip-whitespace>
+        <style>
+            :host {
+                opacity: 0;
+                position: absolute;
+                font-family: 'Open Sans', sans-serif;
+                font-size: 24px;
+                padding-left: 20px;
+                vertical-align: middle;
+                height: 64px;
+            }
+        </style>
+        Follow me on 
+        <owl-follow-me-item id="followMeTwitter" text="@bitowl" icon="twitter.png"></owl-follow-me-item>
+        <owl-follow-me-item id="followMeFacebook" text="bitowl" icon="facebook.png"></owl-follow-me-item>
+        <owl-follow-me-item id="followMeYouTube" text="bitowl" icon="youtube.png"></owl-follow-me-item>
+        <owl-follow-me-item id="followMeGitHub" text="bitowl" icon="github.png"></owl-follow-me-item>
+        
+    </template>
+    <script src="owl-follow-me.js"></script>
+</dom-module>

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito|Open+Sans|Source+Code+Pro');
+
+/* Reset style */
+* {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    line-height: 1.5;
+}

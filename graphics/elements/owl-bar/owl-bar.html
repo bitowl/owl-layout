@@ -1,0 +1,38 @@
+<link rel="import" href="../../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../owl-currently-playing/owl-currently-playing.html">
+<link rel="import" href="../owl-follow-me/owl-follow-me.html">
+<link rel="import" href="../owl-timer/owl-timer.html">
+
+<dom-module id="owl-bar">
+    <template strip-whitespace>
+        <style>
+            :host {
+                position: absolute;
+                display: flex;
+                width: 100%;
+                height: 64px;
+                bottom: 0px;
+                background: url(img/header_background.png);
+                overflow: hidden;
+                color: #fff;
+                z-index: 10;
+            }
+            #innerBar {
+                flex-grow: 1;
+                position: relative;
+                overflow:hidden;
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
+        <img id="streamerLogo" src="[[importPath]]img/logo.png" />
+        <div id="innerBar">
+            <owl-follow-me id="followMe"></owl-follow-me>
+            <owl-currently-playing id="currentlyPlaying"></owl-currently-playing>
+        </div>
+        <owl-timer id="timer"></owl-timer>
+        <img id="eventLogo" src="{{eventLogo}}" />
+    </template>
+    <script src="owl-bar.js"></script>
+</dom-module>
