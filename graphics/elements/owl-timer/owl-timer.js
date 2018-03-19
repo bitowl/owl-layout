@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     
-    const ldTimer = nodecg.Replicant('ld-timer');
+    const ldTimer = nodecg.Replicant('timer', 'owl-ldtimer');
 
     class OwlTimer extends Polymer.Element {
         static get is() {

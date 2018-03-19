@@ -13,7 +13,7 @@
             nodecg.listenFor('chat-message', message => {
                 messagesDiv.innerHTML = "<div class='message'><div class='name'>" 
                 + message.username + "</div><div class='text'>" 
-                + message.message + "</div></div>";
+                + message.message + "</div></div>" + messagesDiv.innerHTML;
 
                             
                 console.log(message);
