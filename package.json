@@ -32,7 +32,7 @@
     "dashboardPanels": [
       {
         "name": "countdown",
-        "title": "Countdown",
+        "title": "Setup",
         "width": 2,
         "file": "countdown.html",
         "headerColor": "#9f9bbd"
@@ -42,12 +42,6 @@
         "title": "Break Screen",
         "width": 3,
         "file": "breakscreen.html"
-      }, 
-      {
-        "name": "twitch",
-        "title": "Twitch Chat",
-        "width": 2,
-        "file": "twitch.html"
       }
     ],
     "graphics": [
@@ -57,9 +51,6 @@
         "height": 1080
       }
     ]
-  },
-  "dependencies": {
-    "twitch-bot": "^1.2.5"
   },
   "repository": "https://github.com/nodecg/nodecg.git",
   "license": "MIT"

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     const breakScreenText = nodecg.Replicant('breakscreen', {defaultValue: {
-        text: "",
+        text: '',
         visible: false
     }, persistent: true});
 
