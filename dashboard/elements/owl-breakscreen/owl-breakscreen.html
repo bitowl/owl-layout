@@ -1,5 +1,6 @@
-<link rel="import" href="../../../../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
 <dom-module id="owl-breakscreen">
 	<template>
 		<style>
@@ -18,9 +19,8 @@
 				}
 			}
 		</style>
-
+			<paper-textarea id="breakScreenText" label="Break Screen Text"></paper-textarea>
         
-            <paper-input id="breakScreenText" label="Break Screen Text"></paper-input>
             <paper-button id="updateText" raised on-tap="updateBreakScreenText">
                 Update
             </paper-button>

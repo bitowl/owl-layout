@@ -9,7 +9,8 @@
 
         ready() {
             super.ready();
-            this.breakScreenText = "undefined";
+            this.breakScreenText = "";
+            this.breakScreenVisible = "firsttime";
             breakScreenReplicant.on('change', newVal => {
                 this.breakScreenText = newVal.text
                 newVal.visible == true ? this.showBreakScreen() : this.hideBreakScreen();
@@ -20,6 +21,7 @@
             if (this.breakScreenVisible == "yeah") {
                 return;
             }
+
             this.breakScreenVisible = "yeah";
             console.log("show");
             const tl = new TimelineLite();
@@ -30,6 +32,14 @@
             if (this.breakScreenVisible == "nay") {
                 return;
             }
+
+            if (this.breakScreenVisible == "firsttime") {
+                // Don't play the animation on the first time
+                const tl = new TimelineLite();
+                tl.to(this, 0, {y: -1080})    
+                return;
+            }
+
             this.breakScreenVisible = "nay";
             const tl = new TimelineLite();
             tl.to(this, 1, {y:-1080, ease: Power2.easeIn})

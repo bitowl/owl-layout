@@ -1,7 +1,9 @@
 {
-    "name": "nodecg-bitowl",
-    "dependencies": {
-        "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
-        "paper-button": "PolymerElements/paper-button#^2.0.0"
-    }
+  "name": "nodecg-bitowl",
+  "dependencies": {
+    "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "iron-icons": "^2.1.1",
+    "paper-input": "PolymerElements/paper-input#^2.2.0"
+  }
 }

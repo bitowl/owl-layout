@@ -10,3 +10,6 @@
     vertical-align: baseline;
     line-height: 1.5;
 }
+body {
+    overflow: hidden;
+}
