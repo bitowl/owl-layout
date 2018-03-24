@@ -1,7 +1,7 @@
 'use strict';
 
-const questionBox = require('./questionbox');
+//const questionBox = require('./questionbox');
 
 module.exports = function (nodecg) {
-    questionBox(nodecg);
+    //questionBox(nodecg);
 };

@@ -12,6 +12,7 @@
 
         ready() {
             super.ready();
+            
             breakScreenText.on('change', newVal => {
                 this.$.breakScreenText.value = newVal.text;
                 this.$.show.disabled = newVal.visible;

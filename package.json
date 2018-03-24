@@ -29,6 +29,9 @@
       }
     ],
     "bundleDependencies": {
+      "owl-ldtimer": "^0.0.0",
+      "owl-mpc": "^0.0.0",
+      "owl-question-box": "^0.0.0",
       "owl-twitch-chat": "^0.0.0"
     },
     "compatibleRange": "~0.9.0",
@@ -46,13 +49,6 @@
         "width": 3,
         "file": "breakscreen.html",
 	      "workspace": "Stream"
-      },
-      {
-        "name": "question-box",
-        "title": "Question Box",
-        "width": 2,
-        "file": "question-box.html",
-        "workspace": "Stream"
       }
     ],
     "graphics": [
