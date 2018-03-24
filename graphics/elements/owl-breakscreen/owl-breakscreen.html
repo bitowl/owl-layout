@@ -1,3 +1,4 @@
+<link rel="import" href="../../../bower_components/marked-element/marked-element.html">
 <dom-module id="owl-breakscreen">
 	<template>
 		<style>
@@ -18,13 +19,10 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                
-            }
-            span {
                 white-space: pre;
             }
 		</style>
-        <div><span>{{ breakScreenText }}</span></div>
+        <div><marked-element markdown="{{ breakScreenText }}"></marked-element></div>
 	</template>
 
 	<script src="owl-breakscreen.js"></script>

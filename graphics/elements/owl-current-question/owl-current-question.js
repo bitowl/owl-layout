@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const selectedMessage = nodecg.Replicant('selected-message', 'owl-question-box');
+    const selectedMessage = nodecg.Replicant('selected-question', 'owl-question-box');
 
     class OwlCurrentQuestion extends Polymer.Element {
         static get is() {

@@ -1,4 +1,5 @@
-<link rel="import" href="../../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/marked-element/marked-element.html">
 <dom-module id="owl-current-question">
     <template strip-whitespace>
         <style>
@@ -47,6 +48,9 @@
     .text {
         opacity: 0;
     }
+    img {
+        vertical-align: middle;
+    }
         </style>
     <div class="question">
         <div class="header" id="header">
@@ -54,9 +58,9 @@
             <span class="user" id="user">[[message.display_name]]</span>
         </div>
         <div class="body" id="body">
-            <div class="text" id="text">
-                [[message.message]]
-            </div>
+            <marked-element markdown="[[message.message]]">
+                <div slot="markdown-html" class="text" id="text"></div>
+            </marked-element>
         </div>
     </div>
     </template>

@@ -48,7 +48,7 @@
         "title": "Break Screen",
         "width": 3,
         "file": "breakscreen.html",
-	      "workspace": "Stream"
+        "headerColor": "#1f2429"
       }
     ],
     "graphics": [
