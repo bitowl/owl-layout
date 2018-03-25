@@ -55,10 +55,10 @@
     <div class="question">
         <div class="header" id="header">
             <img src="[[message.avatar]]" class="avatar">
-            <span class="user" id="user">[[message.display_name]]</span>
+            <span class="user" id="user">[[message.user]]</span>
         </div>
         <div class="body" id="body">
-            <marked-element markdown="[[message.message]]">
+            <marked-element markdown="[[message.text]]">
                 <div slot="markdown-html" class="text" id="text"></div>
             </marked-element>
         </div>
