@@ -1,4 +1,5 @@
 <link rel="import" href="../../../bower_components/marked-element/marked-element.html">
+<link rel="import" href="../gdq-countdown/gdq-countdown.html">
 <dom-module id="owl-breakscreen">
 	<template>
 		<style>
@@ -8,21 +9,40 @@
                 height: 100%;
                 overflow: hidden;
 			}
-            div {
+            #flexcontainer {
                 height: calc(100% - 64px);
                 background: #1f2429;
                 z-index: 0;
-                color: #ccc;
-                font-size: 50px;
-                text-align: center;
                 font-family: 'Open Sans', sans-serif;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                flex-direction: column;
+            }
+            .text {
+                color: #ccc;
+                font-size: 50px;
+                text-align: center;
                 white-space: pre;
             }
+            #countdown {
+                color: #999;
+            }
+            #text,
+            #countdown {
+                flex-shrink: 1;
+                flex-grow: 0;
+            }
+            .space {
+                flex-grow: 1;
+            }
 		</style>
-        <div><marked-element markdown="{{ breakScreenText }}"></marked-element></div>
+        <div id="flexcontainer">
+            <div class="space"></div>
+            <marked-element markdown="{{ breakScreenText }}" id="text"><div slot="markdown-html" class="text"></div></marked-element>
+            <gdq-countdown id="countdown"></gdq-countdown>
+            <div class="space"></div>
+        </div>
 	</template>
 
 	<script src="owl-breakscreen.js"></script>

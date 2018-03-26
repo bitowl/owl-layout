@@ -1,0 +1,35 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="gdq-countdown">
+	<template>
+		<style>
+			:host {
+            }
+			#countdown {
+                font-size: 40px;
+                display: flex;
+                justify-content: center;
+            }
+            #countdown > div {
+                display: inline-block;
+            }
+			.blink {
+				animation: blink 1s step-start 0s infinite;
+			}
+			@keyframes blink {
+				50% { opacity: 0; }
+			}
+		</style>
+
+		<div id="countdown">
+			<div id="countdownMinutesTens"></div>
+			<div id="countdownMinutesOnes"></div>
+			<div id="countdownColon">:</div>
+			<div id="countdownSecondsTens"></div>
+			<div id="countdownSecondsOnes"></div>
+        </div>
+        
+	</template>
+
+	<script src="gdq-countdown.js"></script>
+</dom-module>
