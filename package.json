@@ -57,6 +57,20 @@
         "width": 1920,
         "height": 1080
       }
+    ],
+    "soundCues": [
+      {
+        "name": "follow-alert"
+      },
+      {
+        "name": "hide-follow-alert"
+      },
+      {
+        "name": "show-question"
+      },
+      {
+        "name": "hide-question"
+      }
     ]
   },
   "repository": "https://github.com/nodecg/nodecg.git",

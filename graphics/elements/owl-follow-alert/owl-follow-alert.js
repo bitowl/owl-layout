@@ -20,10 +20,6 @@
                 if (!this.isAnimating) {
                     this.showNextFollow();
                 }
-
-               
-
-                console.log('new follower', value);
             });
 
         }
@@ -41,28 +37,19 @@
                         }
                         this.isAnimating = false;
                     });
-                }, 2000);
+                }, nodecg.bundleConfig.followDisplayTime);
             });
         }
 
-        
-        toggleVisibility() {
-            console.log('toggle');
-            this.isVisible = !this.isVisible;
-            if (this.isVisible) {
-                this.show();
-            } else {
-                this.hide();
-            }
-        }
-
         show() {
+            nodecg.playSound('follow-alert');
             const tl = new TimelineLite();
             tl.to(this.$.followalert, .5, { top: "16px", ease: Elastic.easeOut.config(.5, 0.5)});
             return tl;
         }
 
         hide() {
+            nodecg.playSound('hide-follow-alert');
             const tl = new TimelineLite();
             tl.to(this.$.followalert, .5, { top: "-500px", ease: Back.easeIn.config(1.5)});
             return tl;

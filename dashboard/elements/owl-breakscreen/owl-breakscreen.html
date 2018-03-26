@@ -18,7 +18,35 @@
 					color: white;
 				}
 			}
+			.presets {
+				height: 200px;
+				overflow-y: scroll;
+			}
+			.preset {
+				padding-bottom: 16px;
+				display: flex;
+			}
+			.text {
+				flex-grow: 1;
+				flex-shrink: 1;
+			}
+			.fixedButton {
+				flex-shrink: 0;
+			}
 		</style>
+			<div class="presets">
+				<template is="dom-repeat" items="[[presets]]" mutable-data>
+					<div class="preset">
+						<div class="text">
+							{{item}}
+						</div>
+
+						<paper-button on-tap="usePreset" raised class="fixedButton">Use</paper-button>
+						<paper-button on-tap="deletePreset" raised class="fixedButton">Delete</paper-button>
+					</div>	
+				</template>
+			</div>
+
 			<paper-textarea id="breakScreenText" label="Break Screen Text"></paper-textarea>
         
             <paper-button id="updateText" raised on-tap="updateBreakScreenText">
@@ -30,7 +58,8 @@
             </paper-button>
             <paper-button id="hide" raised red on-tap="hideBreakScreen">
                 Hide
-            </paper-button>
+			</paper-button>
+			<paper-button raised on-tap="addPreset">Add Preset</paper-button>
         
 	</template>
 

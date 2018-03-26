@@ -31,6 +31,7 @@
         }
 
         showMessage() {
+            nodecg.playSound('show-question');
             var tl = new TimelineLite();
             tl.to(this.$.header, .5, {'clip-path': 'inset(0 0% 0 0)', ease: Power2.easeIn});
             tl.to(this.$.user, .3, {'clip-path': 'inset(0 0% 0 0)', ease: Power2.easeIn}, '0.3')
@@ -43,6 +44,7 @@
 
 
         hideMessage() {
+            nodecg.playSound('hide-question');
             var tl = new TimelineLite();
             tl.to(this.$.body, .5, {'clip-path': 'inset(0 0 0 100%)', ease: Power1.easeIn});
             tl.to(this.$.header, .5, {'clip-path': 'inset(0 0 0 100%)', ease: Power2.easeIn}, '-=0.4');

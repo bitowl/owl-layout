@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "followDisplayTime": {
+            "type": "number",
+            "default": 2000,
+            "description": "Display time for a new follow (ms)"
+        }
+    },
+    "required": [
+    ]
+}
