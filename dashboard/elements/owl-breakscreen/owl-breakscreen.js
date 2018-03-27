@@ -27,6 +27,10 @@
                 console.log(newVal);
                 this.presets = newVal;
             });
+
+            nodecg.listenFor('delete-preset', () => {
+                this.deletePreset();
+            });
         }
 
         updateBreakScreenText() {
@@ -52,9 +56,18 @@
             this.$.breakScreenText.value = event.model.item;
         }
 
-        deletePreset(event) {
-            breakScreenPresets.value.splice(breakScreenPresets.value.indexOf(event.model.item), 1);
+        confirmDeletePreset(event) {
+            this.presetToDelete = event.model.item;
+            nodecg.getDialog('breakscreen-preset-delete').open();
         }
+
+        deletePreset() {
+            breakScreenPresets.value.splice(breakScreenPresets.value.indexOf(this.presetToDelete), 1);
+        }
+
+
+
+
     }
     customElements.define(OwlBreakscreen.is, OwlBreakscreen);
 })();

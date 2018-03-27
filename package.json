@@ -49,6 +49,30 @@
         "width": 3,
         "file": "breakscreen.html",
         "headerColor": "#1f2429"
+      },
+      {
+        "name": "breakscreen-preset-delete",
+        "title": "Delete Preset?",
+        "width": 2,
+        "file": "breakscreen-preset-delete.html",
+        "dialog": true,
+        "dialogButtons": [
+          {
+            "name": "Yes",
+            "type": "confirm"
+          },
+          {
+            "name": "No",
+            "type": "dismiss"
+          }
+        ]
+      },
+      {
+        "name": "bar-configurator",
+        "title": "Bar Configurator",
+        "width": 3,
+        "file": "bar-configurator.html",
+        "headerColor": "#9f9bbd"
       }
     ],
     "graphics": [

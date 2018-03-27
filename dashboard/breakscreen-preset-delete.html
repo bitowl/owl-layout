@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    Do you really want to delete this breakscreen preset?
+
+    <script>
+        document.addEventListener('dialog-confirmed', function() {
+            console.log('dialog confirmed');
+            nodecg.sendMessage('delete-preset');
+        });
+        document.addEventListener('dialog-dismissed', function() {
+            console.log('dialog dismissed');
+        });
+    </script>
+</body>
+</html>
