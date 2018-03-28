@@ -1,0 +1,23 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/marked-element/marked-element.html">
+<dom-module id="owl-preload-question-images">
+    <template strip-whitespace>
+        <style>
+            :host {}
+
+            .questions {
+                display: none;
+            }
+        </style>
+
+        <div class="questions">
+            <template is="dom-repeat" items="[[questions]]" mutable-data>
+                <img class="avatar" src="[[item.avatar]]" />
+                <marked-element markdown="[[item.text]]">
+                    <div slot="markdown-html" class="text"></div>
+                </marked-element>
+            </template>
+        </div>
+    </template>
+    <script src="owl-preload-question-images.js"></script>
+</dom-module>
