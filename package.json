@@ -73,7 +73,43 @@
         "width": 3,
         "file": "bar-configurator.html",
         "headerColor": "#9f9bbd"
+      },
+      {
+        "name": "bar-content-delete",
+        "title": "Delete Bar Content?",
+        "width": 2,
+        "file": "bar-content-delete.html",
+        "dialog": true,
+        "dialogButtons": [
+          {
+            "name": "Yes",
+            "type": "confirm"
+          },
+          {
+            "name": "No",
+            "type": "dismiss"
+          }
+        ]
+      },
+
+      {
+        "name": "bar-content-add",
+        "title": "Add Bar Content?",
+        "width": 2,
+        "file": "bar-content-add.html",
+        "dialog": true,
+        "dialogButtons": [
+          {
+            "name": "Yes",
+            "type": "confirm"
+          },
+          {
+            "name": "No",
+            "type": "dismiss"
+          }
+        ]
       }
+
     ],
     "graphics": [
       {

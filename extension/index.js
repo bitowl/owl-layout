@@ -4,7 +4,7 @@
 
 module.exports = function (nodecg) {
     //questionBox(nodecg);
-    const barContentsRepl = Replicant('bar-contents', {
+    const barContentsRepl = nodecg.Replicant('bar-contents', {
         defaultValue: [],
         persistent: true
     });
@@ -18,5 +18,5 @@ module.exports = function (nodecg) {
             text: 'asdfasdfasd'
         }
     }
-
+*/
 };

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="import" href="./elements/owl-bar-currently-playing/owl-bar-currently-playing.html">
+    <link rel="import" href="./elements/owl-bar-text-content/owl-bar-text-content.html">
+    <link rel="import" href="./elements/owl-bar-follow-me/owl-bar-follow-me.html">
+</head>
+<body>
+    <div id="placeholder">
+    </div>
+
+    <script>
+        document.addEventListener('dialog-confirmed', function() {
+            var content = document.getElementById('content');
+            nodecg.sendMessage(content.message, content.options);
+        });
+    </script>
+</body>
+</html>

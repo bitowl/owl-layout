@@ -1,0 +1,27 @@
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<dom-module id="owl-add-bar-content">
+    <template>
+        <style>
+            :host {}
+        </style>
+
+        <paper-dropdown-menu no-animations label="Type">
+            <paper-listbox slot="dropdown-content" class="dropdown-content" selected="0" id="type">
+                <template is="dom-repeat" items="[[types]]">
+                    <paper-item>{{item}}</paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+        <paper-button on-tap="addContent" raised>Add</paper-button>
+
+
+
+
+    </template>
+
+    <script src="owl-add-bar-content.js"></script>
+</dom-module>
