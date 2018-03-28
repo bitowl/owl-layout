@@ -10,22 +10,18 @@
         ready() {
             super.ready();
 
+            this.isMessageSet = false;
+
             selectedMessage.on('change', newVal => {
+                this.isMessageSet = newVal === null ? false : true;
                 this.message = newVal;
+                if (newVal !== null) {
+                    this.showMessage();
+                }
             });
 
-            /*nodecg.listenFor('highlight-message', 'owl-twitch-chat', value => {
-                this.user = value.display_name;
-                this.message = value.message;
-                this.showMessage();
-            });*/
-
-            nodecg.listenFor('show-question', 'owl-question-box', (value) => {
-                this.showMessage();
-            });
             nodecg.listenFor('hide-question', 'owl-question-box', (value) => {
                 this.hideMessage();
-                
             });
 
         }
@@ -37,9 +33,6 @@
             tl.to(this.$.user, .3, {'clip-path': 'inset(0 0% 0 0)', ease: Power2.easeIn}, '0.3')
             tl.to(this.$.body, .4, {'clip-path': 'inset(0 0% 0 0)', ease: Power2.easeIn}, '-=0.4');
             tl.to(this.$.text, .5, {'opacity': 1}, '-=0.2');
-            tl.call(() => {
-                nodecg.sendMessageToBundle('showed-question', 'owl-question-box');
-            });
         }
 
 
@@ -54,13 +47,7 @@
             tl.to(this.$.body, 0, {'clip-path': 'inset(0 100% 0 0%)'});
             tl.to(this.$.header, 0, {'clip-path': 'inset(0 100% 0 0%)'});
             tl.to(this.$.text, 0, {'opacity': 0});
-            tl.call(() => {
-                nodecg.sendMessageToBundle('hided-question', 'owl-question-box');
-            });
         }
-
-
-
 
     }
     customElements.define(OwlCurrentQuestion.is, OwlCurrentQuestion);

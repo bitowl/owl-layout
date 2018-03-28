@@ -57,7 +57,9 @@
         </style>
     <div class="question">
         <div class="header" id="header">
-            <img src="[[message.avatar]]" class="avatar">
+            <template is="dom-if" if="{{isMessageSet}}">
+                <img src="[[message.avatar]]" class="avatar">
+            </template>
             <span class="user" id="user">[[message.user]]</span>
         </div>
         <div class="body" id="body">
