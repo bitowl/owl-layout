@@ -5,15 +5,13 @@
 
     class OwlCurrentlyPlaying extends Polymer.Element {
         static get is() {
-            return 'owl-currently-playing';
+            return 'owl-bar-currently-playing';
         }
         ready() {
             super.ready();
-            // this.title = "bustatunez, Daniel Rosenqvist, David Wise, Diggi Dis, Harmony, JJT, Level 99, OA, prophetik, Robin Beanland, zyko - Donkey Kong Country 3 'Spanish Jitters' OC ReMix";
             mpcReplicant.on("change", newVal => {
                 this.artist = newVal.artist;
                 this.title = newVal.title;
-                console.log(newVal);
             });
         }
 

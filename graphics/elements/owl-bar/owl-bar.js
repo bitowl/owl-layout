@@ -15,6 +15,8 @@
 
         ready() {
             super.ready();
+            this.isRunning = false;
+            this.changeRequired = false;
 
             barReplicant.on('change', newVal => {
 
@@ -24,81 +26,62 @@
             });
 
             barContentsRepl.on('change', newVal => {
-                // TODO:
-                // - stop the running process loop?
-                // - replace contents of innerBar
-                // - restart processNextPart
+                if (!this.isRunning) {
+                    this.changeBarContents();
+                    this.run();
+                    return;
+                }
+                this.changeRequired = true; // change when everything is hidden
             });
-            
-            this.run();
         }
 
-		run() {
-            const self = this;
-			// For development, comment out whichever parts you don't want to see right now.
-			const parts = [
-                this.showSimpleText,
-                this.stay,
-                this.hideSimpleText
-                /*this.showCurrentlyPlaying,
-                this.stay,
-                this.stay,
-                this.hideCurrentlyPlaying,
-                this.showFollowMe,
-                this.stay,
-                this.hideFollowMe*/
-			];
+        changeBarContents() {
+            var placeholder = this.$.innerBar;
+            while (placeholder.firstChild) { // empty placeholder
+                placeholder.removeChild(placeholder.firstChild);
+            }
 
-			function processNextPart() {
-				if (parts.length > 0) {
-					const part = parts.shift().bind(self);
-					promisifyTimeline(part())
-						.then(processNextPart)
-						.catch(error => {
-							nodecg.log.error('Error when running main loop:', error);
-						});
-				} else {
-					self.run();
-				}
-			}
+            this.contents = []; 
 
-			function promisifyTimeline(tl) {
-				return new Promise(resolve => {
-					tl.call(resolve, null, null, '+=0.03');
-				});
-			}
+            barContentsRepl.value.forEach(content => {
+                var element = document.createElement('owl-bar-' + content.type);
+                element.options = content.options;
+                placeholder.appendChild(element);
+                this.contents.push(element);
+            });
 
-			processNextPart();
-		}
-
-        stay () {
-            const tl = new TimelineLite();
-            tl.to({}, 10, {}); // TODO: make configurable
-            return tl;
         }
 
-        showCurrentlyPlaying() {
-            return this.$.currentlyPlaying.enter();
+        run() {
+            this.isRunning = true;
+            this.currentContent = -1;
+            this.showNextContent();
         }
 
-        hideCurrentlyPlaying() {
-            return this.$.currentlyPlaying.exit();
-        }
+        showNextContent() {
+            this.currentContent++;
 
-        showFollowMe() {
-            return this.$.followMe.enter();
-        }
+            if (this.changeRequired) {
+                this.changeBarContents();
+            }
 
-        hideFollowMe() {
-            return this.$.followMe.exit();
-        }
+            if (this.currentContent >= this.contents.length) { 
+                if (this.currentContent == 0) { // There are no bar elements to be displayed
+                    this.isRunning = false;
+                    return;
+                }
+                this.run();// restart
+                return;
+            }
 
-        showSimpleText() {
-            return this.$.simpleText.enter();
+            const content = this.contents[this.currentContent];
+            content.enter().to({}, content.options.duration/1000, {}).call(() => {
+                content.exit().call(() => {
+                    this.showNextContent();
+                });
+            });
         }
-        hideSimpleText() {
-            return this.$.simpleText.exit();
-        }
+        
 
     }
     customElements.define(OwlBar.is, OwlBar);

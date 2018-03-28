@@ -1,9 +1,9 @@
 (function () {
     'use strict';
     
-    class OwlFollowMe extends Polymer.Element {
+    class OwlBarFollowMe extends Polymer.Element {
         static get is() {
-            return 'owl-follow-me';
+            return 'owl-bar-follow-me';
         }
 
 
@@ -33,5 +33,5 @@
             return tl;
         }
     }
-    customElements.define(OwlFollowMe.is, OwlFollowMe);
+    customElements.define(OwlBarFollowMe.is, OwlBarFollowMe);
 })();
