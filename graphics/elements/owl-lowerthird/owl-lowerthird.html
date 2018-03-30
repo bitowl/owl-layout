@@ -1,0 +1,43 @@
+<link rel="import" href="../../../bower_components/nodecg-replicant/nodecg-replicant.html">
+<link rel="import" href="../../../bower_components/marked-element/marked-element.html">
+<dom-module id="owl-lowerthird">
+    <template>
+        <style>
+            :host {
+            }
+            #lowerthird {
+                position: absolute;
+                width: 70%;
+                left: 15%;
+                bottom: 96px;
+                font-family: 'Open Sans', sans-serif;
+                
+                clip-path: inset(0 100% 0 0);
+                background: #f3f7fa;
+            }
+            #header {
+                background: #578ab5;
+                color: #fff;
+                padding: 16px;
+                font-size: 20px;
+                clip-path: inset(0 0 0 100%);
+            }
+            #text {
+                padding: 16px;
+                font-size: 18px;
+                clip-path: inset(0 100% 0 0);
+            }
+        </style>
+
+        <nodecg-replicant replicant-name="lowerthird-title" value="{{title}}"></nodecg-replicant>
+        <nodecg-replicant replicant-name="lowerthird-text" value="{{text}}"></nodecg-replicant>
+
+        <div id="lowerthird">
+            <div id="header">{{title}}</div>
+            <marked-element markdown="[[text]]">
+                <div slot="markdown-html" class="text" id="text"></div>
+            </marked-element>
+        </div>
+    </template>
+    <script src="owl-lowerthird.js"></script>
+</dom-module>

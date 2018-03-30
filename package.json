@@ -91,7 +91,6 @@
           }
         ]
       },
-
       {
         "name": "bar-content-add",
         "title": "Add Bar Content?",
@@ -108,8 +107,14 @@
             "type": "dismiss"
           }
         ]
+      },
+      {
+        "name": "lowerthird",
+        "title": "Lower Third",
+        "width": 3,
+        "file": "lowerthird.html",
+        "headerColor": "#9f9bbd"
       }
-
     ],
     "graphics": [
       {
@@ -130,6 +135,18 @@
       },
       {
         "name": "hide-question"
+      },
+      {
+        "name": "show-lowerthird"
+      },
+      {
+        "name": "hide-lowerthird"
+      },
+      {
+        "name": "show-breakscreen"
+      },
+      {
+        "name": "hide-breakscreen"
       }
     ]
   },

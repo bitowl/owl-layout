@@ -22,8 +22,8 @@
                 return;
             }
 
+            nodecg.playSound('show-breakscreen');
             this.breakScreenVisible = "yeah";
-            console.log("show");
             const tl = new TimelineLite();
             tl.to(this, 1, {y:0, ease: Power2.easeOut})
         }
@@ -39,6 +39,8 @@
                 tl.to(this, 0, {y: -1080})    
                 return;
             }
+
+            nodecg.playSound('hide-breakscreen');
 
             this.breakScreenVisible = "nay";
             const tl = new TimelineLite();

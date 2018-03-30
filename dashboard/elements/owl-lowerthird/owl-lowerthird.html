@@ -1,0 +1,29 @@
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/nodecg-replicant/nodecg-replicant.html">
+<dom-module id="owl-lowerthird">
+    <template>
+        <style>
+            :host {
+            }
+        </style>
+
+        <nodecg-replicant replicant-name="lowerthird-title" value="{{title}}"></nodecg-replicant>
+        <nodecg-replicant replicant-name="lowerthird-text" value="{{text}}"></nodecg-replicant>
+
+        <paper-textarea label="Lower Third Title" id="title" value="{{title}}"></paper-textarea>
+        <paper-textarea label="Lower Third Text" id="text" value="{{text}}"></paper-textarea>
+
+        
+        <paper-button id="show" raised green on-tap="show">
+            <iron-icon icon="icons:visibility"></iron-icon>
+            &nbsp;Show
+        </paper-button>
+        <paper-button id="hide" raised red on-tap="hide">
+            <iron-icon icon="icons:visibility-off"></iron-icon>
+            &nbsp;Hide
+        </paper-button>
+    </template>
+    <script src="owl-lowerthird.js"></script>
+</dom-module>
