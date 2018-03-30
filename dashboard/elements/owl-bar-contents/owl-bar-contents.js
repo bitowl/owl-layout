@@ -40,6 +40,7 @@
             element.options = Object.assign({}, this.contentToEdit.options);
             element.message = 'bar-content-edit';
             placeholder.appendChild(element);
+            nodecg.getDialog('bar-content-add').querySelector('iframe').iFrameResizer.resize();
             nodecg.getDialog('bar-content-add').open();
         }
 
