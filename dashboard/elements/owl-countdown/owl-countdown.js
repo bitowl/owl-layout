@@ -26,7 +26,6 @@
                 this.eventLogos = newVal;
                 for (var i in newVal) {
                     var eventLogo = newVal[i];
-                    console.log(eventLogo);
                 }
             })
         }

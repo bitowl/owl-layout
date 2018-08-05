@@ -24,7 +24,6 @@
             });
 
             breakScreenPresets.on('change', newVal => {
-                console.log(newVal);
                 this.presets = newVal;
             });
 
@@ -35,7 +34,6 @@
 
         updateBreakScreenText() {
             breakScreenText.value.text = this.$.breakScreenText.value;
-            console.log(breakScreenText.value);
         }
 
         showBreakScreen() {
@@ -48,7 +46,6 @@
         }
 
         addPreset() {
-            console.log('Add preset');
             breakScreenPresets.value.push(this.$.breakScreenText.value);
         }
 

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     
-    const lowerthirdVisibleRepl = nodecg.Replicant('lowerthird-visible');
+    const lowerthirdVisibleRepl = nodecg.Replicant('lowerthird-visible', {persistent: true});
 
     const questionBoxSelectedMessageRepl = nodecg.Replicant('selected-question', 'owl-question-box');
     const questionBoxEnabledRepl = nodecg.Replicant('enabled', 'owl-question-box');

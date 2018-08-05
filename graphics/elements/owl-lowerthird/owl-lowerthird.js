@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     
-    const lowerthirdVisibleRepl = nodecg.Replicant('lowerthird-visible');
+    const lowerthirdVisibleRepl = nodecg.Replicant('lowerthird-visible', {persistent: true});
 
     class OwlLowerthird extends Polymer.Element {
         static get is() {

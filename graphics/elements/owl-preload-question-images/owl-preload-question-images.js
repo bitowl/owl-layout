@@ -10,7 +10,6 @@
         ready() {
             super.ready();
             boxMessages.on('change', value => {
-                console.log(value);
                 this.questions = value;
             });
         }
