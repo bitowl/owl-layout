@@ -2,23 +2,10 @@
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bundles/owl-nodecg-styles/dashboard/css/bitowl-theme.html">
 <dom-module id="owl-breakscreen">
 	<template>
-		<style>
-			:host {
-			}
-			#show {
-				--paper-button: {
-					background-color: #5BA664;
-					color: white;
-				}
-			}
-			#hide {
-				--paper-button: {
-					background-color: #C9513E;
-					color: white;
-				}
-			}
+		<style include="bitowl-theme">
 			.presets {
 				height: 200px;
 				overflow-y: scroll;
@@ -37,8 +24,6 @@
 			}
 			.deleteButton {
 				--paper-button: {
-					background-color: #C9513E;
-					color: white;
 					min-width: 50px;
 				}
 			}
@@ -50,32 +35,33 @@
 							{{item}}
 						</div>
 
-						<paper-button on-tap="usePreset" raised class="fixedButton">Use</paper-button>
-						<paper-button on-tap="confirmDeletePreset" raised class="fixedButton deleteButton"><iron-icon icon="icons:delete"></iron-icon></paper-button>
+						<paper-button on-tap="usePreset" class="fixedButton nodecg-benign">Use</paper-button>
+						<paper-button on-tap="confirmDeletePreset" class="fixedButton deleteButton nodecg-reject"><iron-icon icon="icons:delete"></iron-icon></paper-button>
 					</div>	
 				</template>
 			</div>
 
 			<paper-textarea id="breakScreenText" label="Break Screen Text"></paper-textarea>
         
-            <paper-button id="updateText" raised on-tap="updateBreakScreenText">
+            <paper-button id="updateText" on-tap="updateBreakScreenText" class="nodecg-configure">
 				<iron-icon icon="icons:refresh"></iron-icon>
                 &nbsp;Update
             </paper-button>
         
-            <paper-button id="show" raised green on-tap="showBreakScreen">
+            <paper-button id="show" on-tap="showBreakScreen" class="nodecg-accept">
 				<iron-icon icon="icons:visibility"></iron-icon>
                 &nbsp;Show
             </paper-button>
-            <paper-button id="hide" raised red on-tap="hideBreakScreen">
+            <paper-button id="hide" on-tap="hideBreakScreen" class="nodecg-reject">
 				<iron-icon icon="icons:visibility-off"></iron-icon>
                 &nbsp;Hide
 			</paper-button>
-			<paper-button raised on-tap="addPreset">
+		<p>
+			<paper-button on-tap="addPreset" class="nodecg-benign">
 				<iron-icon icon="icons:save"></iron-icon>
 				&nbsp;Add Preset
 			</paper-button>
-        
+        </p>
 	</template>
 
 	<script src="owl-breakscreen.js"></script>

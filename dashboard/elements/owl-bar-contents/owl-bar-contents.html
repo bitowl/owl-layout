@@ -2,9 +2,10 @@
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bundles/owl-nodecg-styles/dashboard/css/bitowl-theme.html">
 <dom-module id="owl-bar-contents">
     <template>
-        <style>
+        <style include="bitowl-theme">
             :host {}
 
             /*#show {
@@ -82,8 +83,8 @@
                 <div class="row">
                     <div class="type">[[item.type]]</div>
                     <div class="options">[[_formatOptions(item.options)]]</div>
-                    <paper-button raised class="button" on-tap="editContent"><iron-icon icon="icons:create"></iron-icon></paper-button>
-                    <paper-button raised class="button deleteButton" on-tap="confirmDeleteContent"><iron-icon icon="icons:delete"></iron-icon></paper-button>
+                    <paper-button class="button nodecg-configure" on-tap="editContent"><iron-icon icon="icons:create"></iron-icon></paper-button>
+                    <paper-button class="button deleteButton nodecg-reject" on-tap="confirmDeleteContent"><iron-icon icon="icons:delete"></iron-icon></paper-button>
                 </div>
             </template>
         </div>

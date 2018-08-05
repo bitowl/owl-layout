@@ -14,7 +14,6 @@
             this.currentlyVisible = false;
 
             lowerthirdVisibleRepl.on('change', newValue => {
-                console.log('values', newValue);
                 if (newValue == true && this.currentlyVisible == false) {
                     this.show();
                     this.currentlyVisible = newValue;

@@ -9,8 +9,8 @@
 
         ready() {
             super.ready();
-            this.breakScreenText = "";
-            this.breakScreenVisible = "firsttime";
+            this.breakScreenText = '';
+            this.breakScreenVisible = 'firsttime';
             breakScreenReplicant.on('change', newVal => {
                 this.breakScreenText = newVal.text
                 newVal.visible == true ? this.showBreakScreen() : this.hideBreakScreen();
@@ -18,22 +18,24 @@
         }
 
         showBreakScreen() {
-            if (this.breakScreenVisible == "yeah") {
+            if (this.breakScreenVisible == 'yeah') {
                 return;
             }
 
-            nodecg.playSound('show-breakscreen');
-            this.breakScreenVisible = "yeah";
+            if (this.breakScreenVisible != 'firsttime') {
+                nodecg.playSound('show-breakscreen');
+            }
+            this.breakScreenVisible = 'yeah';
             const tl = new TimelineLite();
             tl.to(this, 1, {y:0, ease: Power2.easeOut})
         }
 
         hideBreakScreen() {
-            if (this.breakScreenVisible == "nay") {
+            if (this.breakScreenVisible == 'nay') {
                 return;
             }
 
-            if (this.breakScreenVisible == "firsttime") {
+            if (this.breakScreenVisible == 'firsttime') {
                 // Don't play the animation on the first time
                 const tl = new TimelineLite();
                 tl.to(this, 0, {y: -1080})    
@@ -42,7 +44,7 @@
 
             nodecg.playSound('hide-breakscreen');
 
-            this.breakScreenVisible = "nay";
+            this.breakScreenVisible = 'nay';
             const tl = new TimelineLite();
             tl.to(this, 1, {y:-1080, ease: Power2.easeIn})
         }

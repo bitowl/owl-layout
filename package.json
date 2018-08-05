@@ -29,26 +29,27 @@
       }
     ],
     "bundleDependencies": {
-      "owl-ldtimer": "^0.0.0",
-      "owl-mpc": "^0.0.0",
-      "owl-question-box": "^0.0.0",
-      "owl-twitch-chat": "^0.0.0"
+      "owl-ldtimer": "^0.1.0",
+      "owl-mpc": "^0.1.0",
+      "owl-question-box": "^0.1.0",
+      "owl-twitch-chat": "^0.1.0",
+      "owl-nodecg-styles": "^0.0.0"
     },
-    "compatibleRange": "~0.9.0",
+    "compatibleRange": "~1.1.0",
     "dashboardPanels": [
       {
         "name": "countdown",
         "title": "Setup",
         "width": 2,
         "file": "countdown.html",
-        "headerColor": "#9f9bbd"
+        "headerColor": "#525F78"
       },
       {
         "name": "breakscreen",
         "title": "Break Screen",
         "width": 3,
         "file": "breakscreen.html",
-        "headerColor": "#1f2429"
+        "headerColor": "#525F78"
       },
       {
         "name": "breakscreen-preset-delete",
@@ -72,7 +73,7 @@
         "title": "Bar Configurator",
         "width": 3,
         "file": "bar-configurator.html",
-        "headerColor": "#9f9bbd"
+        "headerColor": "#525F78"
       },
       {
         "name": "bar-content-delete",
@@ -113,7 +114,7 @@
         "title": "Lower Third",
         "width": 3,
         "file": "lowerthird.html",
-        "headerColor": "#9f9bbd"
+        "headerColor": "#525F78"
       }
     ],
     "graphics": [
