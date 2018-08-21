@@ -1,0 +1,125 @@
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../styles/owl-style.html" />
+<dom-module id="owl-skewed">
+    <template strip-whitespace>
+        <style include="owl-style">
+            .skewed {
+                position: relative;
+                display: inline-block;
+                padding-right: 15px;
+            }
+
+            .skewed.no-box {
+                padding-right: 0px;
+            }
+
+            .skewed .inner {
+                padding-left: 30px;
+                padding-right: 30px;
+                z-index: 1;
+                position: relative;
+            }
+
+            .skewed .bg {
+                content: "";
+                background: var(--background-gray);
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0px;
+                z-index: 0;
+                transform: skew(-30deg);
+            }
+
+            .skewed .box {
+                content: "";
+                background: var(--neon-green);
+                width: 15px;
+                height: 100%;
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                z-index: 10;
+                transform: skew(-30deg);
+                padding-right: 1px;
+                margin-right: -1px;
+            }
+
+            .skewed .box {
+                position: absolute;
+
+                background: var(--neon-green);
+                width: 15px;
+                height: 100%;
+                /*clip-path: polygon(30% 0, 100% 0, 70% 100%, 0% 100%);*/
+                transform: skew(-30deg);
+                right: 0px;
+                /*position: relative;
+    right: -100%;
+    z-index: 2;*/
+            }
+
+            .skewed.no-box .box {
+                display: none;
+            }
+
+            .skewed .background {
+                background: #323334;
+                width: 100%;
+                height: 100%;
+                transform: skew(-30deg);
+                position: absolute;
+            }
+
+            .skewed .inner {
+                z-index: 10;
+            }
+
+            /* begin invisible */
+
+            .skewed {
+                display: none;
+            }
+
+            .skewed .box {
+                clip-path: inset(0 100% 0 0);
+                width: 100%;
+            }
+
+            .skewed .bg {
+                clip-path: inset(0 100% 0 0);
+            }
+
+            .skewed .inner {
+                clip-path: inset(0 100% 0 0);
+            }
+
+            /* begin visible */
+
+            .skewed.visible {
+                display: inline-block;
+            }
+
+            .skewed.visible .box {
+                clip-path: inset(0 0% 0 0);
+                width: 15px;
+            }
+
+            .skewed.visible .bg {
+                clip-path: inset(0 0% 0 0);
+            }
+
+            .skewed.visible .inner {
+                clip-path: inset(0 0% 0 0);
+            }
+        </style>
+        <div class$="{{getClass()}}">
+            <div class="bg"></div>
+            <div class="inner">
+                <slot></slot>
+            </div>
+            <div class="box"></div>
+        </div>
+    </template>
+    <script src="owl-skewed.js"></script>
+</dom-module>

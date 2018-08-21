@@ -1,20 +1,26 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../styles/owl-style.html" />
+<link rel="import" href="../owl-skewed/owl-skewed.html" />
 <dom-module id="owl-follow-me-item">
     <template strip-whitespace>
-        <style>
+        <style include="owl-style">
             :host {
                 display: inline-block;
-                font-family: 'Nunito', sans-serif;
+                /*font-family: 'Nunito', sans-serif;
                 padding-left: 30px;
-                line-height: 60px;
+                line-height: 60px;*/
             }
+
             img {
                 vertical-align: middle;
                 padding-right: 5px;
             }
         </style>
-        <img src="[[importPath]]img/{{ icon }}" />
-        <span>{{ text }}</span>
+
+        <owl-skewed>
+            <img src="[[importPath]]img/{{ icon }}" /> {{ text }}
+        </owl-skewed>
+
     </template>
     <script src="owl-follow-me-item.js"></script>
 </dom-module>

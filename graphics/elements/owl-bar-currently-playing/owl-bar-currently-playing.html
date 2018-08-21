@@ -1,9 +1,10 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../styles/owl-style.html" />
 <dom-module id="owl-bar-currently-playing">
     <template strip-whitespace>
-        <style>
+        <style include="owl-style">
             :host {
-                display:block;
+                display: block;
                 opacity: 0;
                 position: absolute;
                 font-family: 'Open Sans', sans-serif;
@@ -15,26 +16,35 @@
                 align-items: center;
                 height: 64px;
             }
+
             img {
                 vertical-align: middle;
                 padding-right: 10px;
             }
+
             .song {
                 line-height: 1;
             }
+
             .artist {
                 font-size: 16px;
                 color: #eee;
             }
-            
         </style>
-        <img src="[[importPath]]img/icon.png" />
-        <div class="song">
-            <div class="artist">{{artist}}</div>
-            <div class="title">{{title}}</div>
+        <div class="skewed">
+            <div class="bg"></div>
+            <div class="inner">
+                <img src="[[importPath]]img/icon.png" />
+                <div class="song">
+                    <div class="artist">{{artist}}</div>
+                    <div class="title">{{title}}</div>
+                </div>
+            </div>
+            <div class="box"></div>
         </div>
 
-        
+
+
         </div>
     </template>
     <script src="owl-bar-currently-playing.js"></script>

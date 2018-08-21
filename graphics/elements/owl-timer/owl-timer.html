@@ -1,24 +1,39 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../styles/owl-style.html" />
 <dom-module id="owl-timer">
     <template strip-whitespace>
-        <style>
+        <style include="owl-style">
             :host {
-                font-family: 'Nunito', sans-serif;
+                /*font-family: 'Nunito', sans-serif;
                 font-size: 26px;
                 font-weight: bold;
                 padding-top: 13px;
                 color: #c3bab4;
                 padding-left: 10px;
                 padding-right: 10px;
-                background: #1f2429;
+                background: #1f2429;*/
                 font-feature-settings: 'tnum'; /* monospaced numbers */
                 /*text-shadow: rgba(0,0,0,0.3) 1px 1px 0px, 
                 rgba(0,0,0,0.3) -1px -1px 0px,
                 rgba(0,0,0,0.3) -1px 1px 0px,
                 rgba(0,0,0,0.3) 1px -1px 0px;*/
             }
+            .skewed {
+                height: 64px;
+                line-height: 64px;
+                font-size: 26px;
+                font-weight: bold;
+            }
+            .skewed .box {
+                
+                background: var(--neon-blue);
+            }
         </style>
-        {{ timeText }}
+        <div class="skewed visible">
+            <div class="bg"></div>
+            <div class="inner">{{ timeText }}</div>
+            <div class="box"></div>
+        </div>
     </template>
     <script src="owl-timer.js"></script>
 </dom-module>
