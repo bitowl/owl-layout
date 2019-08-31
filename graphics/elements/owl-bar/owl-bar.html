@@ -18,17 +18,17 @@
                 color: #fff;
                 z-index: 10;
             }
+
             #innerBar {
                 flex-grow: 1;
                 position: relative;
-                overflow:hidden;
+                overflow: hidden;
                 padding-left: 25px;
             }
+
             .hidden {
                 display: none;
             }
-            
-
         </style>
         <img id="streamerLogo" src="[[importPath]]img/logo.png" />
         <div id="innerBar">
@@ -36,9 +36,9 @@
         </div>
         <owl-timer id="timer"></owl-timer>
 
-        <owl-skewed no-box dark-background style="margin-right:-18px" id="eventLogo">
+        <owl-skewed no-box dark-background style="margin-right:-18px" id="eventLogo" start-invisible="true">
             <img src="{{eventLogo}}" />
-        </owl-skewed>        
+        </owl-skewed>
     </template>
     <script src="owl-bar.js"></script>
 </dom-module>
