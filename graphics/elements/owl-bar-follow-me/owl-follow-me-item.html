@@ -9,6 +9,7 @@
                 /*font-family: 'Nunito', sans-serif;
                 padding-left: 30px;
                 line-height: 60px;*/
+                line-height: 64px;
             }
 
             img {
@@ -17,7 +18,7 @@
             }
         </style>
 
-        <owl-skewed>
+        <owl-skewed box-color="{{color}}" id="content" start-invisible>
             <img src="[[importPath]]img/{{ icon }}" /> {{ text }}
         </owl-skewed>
 

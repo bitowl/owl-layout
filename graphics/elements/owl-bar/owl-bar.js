@@ -18,10 +18,30 @@
             this.isRunning = false;
             this.changeRequired = false;
 
+            this.logoVisible = false;
+            this.timerVisible = false;
+
             barReplicant.on('change', newVal => {
 
-                this.$.timer.style.display = newVal.timerVisible ? 'block' : 'none';
-                this.$.eventLogo.style.display = newVal.logoVisible ? 'block' : 'none'
+                // this.$.timer.style.display = newVal.timerVisible ? 'block' : 'none';
+                // console.log('display: ' + this.$.eventLogo.style.display);
+                if (newVal.timerVisible && !this.timerVisible) {
+                    this.$.timer.show();
+                    this.timerVisible = true;
+                } else if (!newVal.timerVisible && this.timerVisible) {
+                    this.$.timer.hide();
+                    this.timerVisible = false;
+                }
+
+
+                if (newVal.logoVisible && !this.logoVisible) {
+                    this.$.eventLogo.show();
+                    this.logoVisible = true;
+                } else  if (!newVal.logoVisible && this.logoVisible) {
+                    this.$.eventLogo.hide();
+                    this.logoVisible = false;
+                }
+                // this.$.eventLogo.style.display = newVal.logoVisible ? 'block' : 'none'
                 this.eventLogo = newVal.eventLogo;
             });
 

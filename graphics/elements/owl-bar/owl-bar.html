@@ -22,11 +22,12 @@
                 flex-grow: 1;
                 position: relative;
                 overflow:hidden;
+                padding-left: 25px;
             }
             .hidden {
                 display: none;
             }
-
+            
 
         </style>
         <img id="streamerLogo" src="[[importPath]]img/logo.png" />
@@ -35,12 +36,9 @@
         </div>
         <owl-timer id="timer"></owl-timer>
 
-        <div class="skewed visible logo">
-            <div class="bg"></div>
-            <div class="inner"><img id="eventLogo" src="{{eventLogo}}" /></div>
-            <div class="box"></div>
-        </div>
-        
+        <owl-skewed no-box dark-background style="margin-right:-18px" id="eventLogo">
+            <img src="{{eventLogo}}" />
+        </owl-skewed>        
     </template>
     <script src="owl-bar.js"></script>
 </dom-module>

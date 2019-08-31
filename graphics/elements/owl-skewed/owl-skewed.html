@@ -31,6 +31,10 @@
                 transform: skew(-30deg);
             }
 
+            .skewed.dark-background .bg {
+                background: var(--ludumdare-background);
+            }
+
             .skewed .box {
                 content: "";
                 background: var(--neon-green);
@@ -62,6 +66,10 @@
             .skewed.no-box .box {
                 display: none;
             }
+            .skewed.no-box {
+                margin-right: -1px;
+            }
+            
 
             .skewed .background {
                 background: #323334;
@@ -77,26 +85,26 @@
 
             /* begin invisible */
 
-            .skewed {
+            .skewed.start-invisible {
                 display: none;
             }
 
-            .skewed .box {
+            .skewed.start-invisible .box {
                 clip-path: inset(0 100% 0 0);
                 width: 100%;
             }
 
-            .skewed .bg {
+            .skewed.start-invisible .bg {
                 clip-path: inset(0 100% 0 0);
             }
 
-            .skewed .inner {
+            .skewed.start-invisible .inner {
                 clip-path: inset(0 100% 0 0);
             }
 
             /* begin visible */
 
-            .skewed.visible {
+        /*    .skewed.visible {
                 display: inline-block;
             }
 
@@ -111,14 +119,14 @@
 
             .skewed.visible .inner {
                 clip-path: inset(0 0% 0 0);
-            }
+            }*/
         </style>
-        <div class$="{{getClass()}}">
-            <div class="bg"></div>
-            <div class="inner">
+        <div class$="{{getClass()}}" id="all">
+            <div class="bg" id="bg"></div>
+            <div class="inner" id="inner">
                 <slot></slot>
             </div>
-            <div class="box"></div>
+            <div class="box" id="box"></div>
         </div>
     </template>
     <script src="owl-skewed.js"></script>

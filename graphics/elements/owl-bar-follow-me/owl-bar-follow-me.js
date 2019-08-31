@@ -10,26 +10,38 @@
         enter() {
             const items = [
                 this.$.followMeTwitter,
-                this.$.followMeFacebook,
                 this.$.followMeYouTube,
-                this.$.followMeGitHub
+                this.$.followMeGitHub,
+                this.$.followMeFacebook,
             ];
 
             const tl = new TimelineLite();
+            tl.add(this.$.label.show());
             items.forEach((item) => {
-                tl.to(item, 0, {opacity: 0, y: -20});
-            });
-            tl.to(this, .5, {opacity: 1});
-            items.forEach((item) => {
-                tl.to(item, 0.3, {opacity:1, y: 0, ease: Back.easeOut.config(3)});
+                console.log(item);
+                tl.add(item.show(), '-=0.65');
+                // tl.to(item, 0, {opacity: 0, y: -20});
             });
             return tl;
         }
 
 
         exit() {
+            const items = [
+                this.$.followMeTwitter,
+                this.$.followMeYouTube,
+                this.$.followMeGitHub,
+                this.$.followMeFacebook,
+            ];
+
             const tl = new TimelineLite();
-            tl.to(this, .5, {opacity: 0});
+            tl.add(this.$.label.hide());
+            // tl.to(this, .5, {opacity: 0});
+            items.forEach((item) => {
+                console.log(item);
+                tl.add(item.hide(), '0');
+                // tl.to(item, 0, {opacity: 0, y: -20});
+            });
             return tl;
         }
     }

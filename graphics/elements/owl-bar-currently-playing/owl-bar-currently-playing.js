@@ -16,15 +16,17 @@
         }
 
         enter() {
-            var tl = new TimelineLite();
+            return this.$.skewed.show();
+            /*var tl = new TimelineLite();
             tl.to(this, 0, {x: 190}); // reset x
             tl.to(this, .5, {x: 20, opacity: 1, ease: Back.easeOut})
-            return tl;
+            return tl;*/
         }
         exit() {
-            var tl = new TimelineLite();
+            return this.$.skewed.hide();
+            /*var tl = new TimelineLite();
             tl.to(this, 1, {opacity: 0});
-            return tl;
+            return tl;*/
         }
 
     }

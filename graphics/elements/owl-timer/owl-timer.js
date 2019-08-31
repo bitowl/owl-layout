@@ -16,6 +16,13 @@
                 this.timeText = newVal.text;
             });
         }
+
+        show() {
+            return this.$.content.show();
+        }
+        hide() {
+            return this.$.content.hide();
+        }
     }
     customElements.define(OwlTimer.is, OwlTimer);
 })();

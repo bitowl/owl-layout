@@ -1,22 +1,28 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../styles/owl-style.html" />
+<link rel="import" href="../owl-skewed/owl-skewed.html" />
 <dom-module id="owl-bar-currently-playing">
     <template strip-whitespace>
         <style include="owl-style">
             :host {
-                display: block;
+/*                display: block;
                 opacity: 0;
                 position: absolute;
                 font-family: 'Open Sans', sans-serif;
-                /*background: rgba(0,0,0,0.2);
-                border-radius: 5px;
-                padding: 5px;*/
+
                 font-size: 22px;
+                display: flex;
+                align-items: center;
+                height: 64px;*/
+                font-family: 'Open Sans', sans-serif;
+                font-size: 22px;
+            }
+            .contents {
                 display: flex;
                 align-items: center;
                 height: 64px;
             }
-
+            
             img {
                 vertical-align: middle;
                 padding-right: 10px;
@@ -31,17 +37,15 @@
                 color: #eee;
             }
         </style>
-        <div class="skewed">
-            <div class="bg"></div>
-            <div class="inner">
-                <img src="[[importPath]]img/icon.png" />
-                <div class="song">
-                    <div class="artist">{{artist}}</div>
-                    <div class="title">{{title}}</div>
-                </div>
+        <owl-skewed box-color="var(--neon-purple)" id="skewed" start-invisible>
+            <div class="contents">
+            <img src="[[importPath]]img/icon.png" />
+            <div class="song">
+                <div class="artist">{{artist}}</div>
+                <div class="title">{{title}}</div>
             </div>
-            <div class="box"></div>
         </div>
+        </owl-skewed>
 
 
 

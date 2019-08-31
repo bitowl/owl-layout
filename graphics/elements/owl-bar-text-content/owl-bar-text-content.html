@@ -1,20 +1,30 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../styles/owl-style.html" />
+<link rel="import" href="../owl-skewed/owl-skewed.html" />
 <dom-module id="owl-bar-text-content">
     <template strip-whitespace>
-        <style>
+        <style include="owl-style">
             :host {
-                display:block;
+                /*display:block;
                 font-family: 'Open Sans', sans-serif;
                 font-size: 25px;
                 line-height: 60px;
                 padding-left: 16px;
                 position: absolute;
-                clip-path: inset(0 100% 0 0);
+                clip-path: inset(0 100% 0 0);*/
+                
+            }
+            owl-skewed {
+                font-family: 'Open Sans', sans-serif;
+                font-size: 23px;
+                line-height: 64px;
+                height: 64px;
             }
             
         </style>
-        {{options.text}}
-        </div>
+        <owl-skewed start-invisible id="skewed">
+            {{options.text}}
+        </owl-skewed>
     </template>
     <script src="owl-bar-text-content.js"></script>
 </dom-module>

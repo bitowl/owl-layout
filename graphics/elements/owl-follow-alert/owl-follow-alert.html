@@ -2,31 +2,32 @@
 <dom-module id="owl-follow-alert">
     <template strip-whitespace>
         <style>
-            :host {
-                
-            }
+            :host {}
+
             .followalert {
                 position: absolute;
                 top: -500px;
                 right: 16px;
             }
+
             .header {
-                background: #578ab5;
+                background: #3f3f3f;
                 color: #fff;
                 font-family: 'Nunito', sans-serif;
                 font-size: 24px;
                 padding: 8px;
             }
+
             .body {
                 font-family: 'Open Sans', sans-serif;
                 font-size: 18px;
                 padding: 16px;
                 background: #f3f7fa;
-                
+
                 color: #222;
             }
         </style>
-        
+
         <div class="followalert" id="followalert">
             <div class="header">Now following</div>
             <div class="body">{{username}}</div>
