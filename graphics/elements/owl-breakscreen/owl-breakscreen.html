@@ -1,17 +1,19 @@
 <link rel="import" href="../../../bower_components/marked-element/marked-element.html">
 <link rel="import" href="../gdq-countdown/gdq-countdown.html">
 <dom-module id="owl-breakscreen">
-	<template>
-		<style>
-			:host {
+    <template>
+        <style>
+            :host {
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
-			}
+            }
+
             #flexcontainer {
                 height: calc(100% - 64px);
-                background: #1f2429;
+
+                /*background: #1f2429;*/
                 z-index: 0;
                 font-family: 'Open Sans', sans-serif;
                 display: flex;
@@ -19,30 +21,62 @@
                 align-items: center;
                 flex-direction: column;
             }
-            .text {
-                color: #ccc;
+
+            .text-content {
+                width: 100%;
+                background: #c2ea21aa;
                 font-size: 50px;
+                color: var(--background-gray);
+                padding: 10px;
                 text-align: center;
             }
-            #countdown {
-                color: #999;
+
+            .text {
+                /*color: #ccc;
+                font-size: 50px;
+                text-align: center;*/
             }
+
+            #countdown {
+                color: #aaa;
+            }
+
             #text,
             #countdown {
                 flex-shrink: 1;
                 flex-grow: 0;
             }
+
+            .countdown-container {
+                display: flex;
+                position: absolute;
+                width: 100%;
+                height: 50%;
+                top: 50%;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #countdown {}
+
             .space {
                 flex-grow: 1;
             }
-		</style>
+        </style>
         <div id="flexcontainer">
-            <div class="space"></div>
-            <marked-element markdown="{{ breakScreenText }}" id="text"><div slot="markdown-html" class="text"></div></marked-element>
-            <gdq-countdown id="countdown"></gdq-countdown>
-            <div class="space"></div>
-        </div>
-	</template>
+            <div class="text-content">
+                <marked-element markdown="{{ breakScreenText }}" id="text">
+                    <div slot="markdown-html" class="text"></div>
+                </marked-element>
+            </div>
 
-	<script src="owl-breakscreen.js"></script>
+
+        </div>
+        <div class="countdown-container">
+            <gdq-countdown id="countdown"></gdq-countdown>
+        </div>
+
+    </template>
+
+    <script src="owl-breakscreen.js"></script>
 </dom-module>
