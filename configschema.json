@@ -3,15 +3,14 @@
     "properties": {
         "followDisplayTime": {
             "type": "number",
-            "default": 2000,
+            "default": 4000,
             "description": "Display time for a new follow (ms)"
         },
-	"defaultBarContentTime": {
-	    "type": "number",
-	    "default": 10000,
-	    "description": "Default value for the display time of a bar content"
-	}
+        "defaultBarContentTime": {
+            "type": "number",
+            "default": 10000,
+            "description": "Default value for the display time of a bar content"
+        }
     },
-    "required": [
-    ]
+    "required": []
 }

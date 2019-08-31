@@ -31,6 +31,10 @@
                 transform: skew(-30deg);
             }
 
+            .skewed.inset-shadow .bg {
+                box-shadow: inset 0 0 5px #00000060;
+            }
+
             .skewed.dark-background .bg {
                 background: var(--ludumdare-background);
             }
@@ -66,10 +70,11 @@
             .skewed.no-box .box {
                 display: none;
             }
+
             .skewed.no-box {
                 margin-right: -1px;
             }
-            
+
 
             .skewed .background {
                 background: #323334;
@@ -104,7 +109,7 @@
 
             /* begin visible */
 
-        /*    .skewed.visible {
+            /*    .skewed.visible {
                 display: inline-block;
             }
 
