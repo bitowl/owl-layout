@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="styles/base.css" />
+<link rel="import" href="styles/owl-style.html" />
+
+<style include="owl-style">
+  body {
+    --background-gray: #323334;
+    --neon-green: #c2ea21;
+
+    /*background: var(--background-gray);*/
+
+    display: flex;
+    flex-direction: column;
+    font-family: "Open Sans", sans-serif;
+  }
+  html,
+  body {
+    height: 100%;
+  }
+  .header {
+    width: 100%;
+    background: #c2ea21aa;
+    /*position: absolute;
+        z-index: 2;*/
+    font-size: 50px;
+    color: var(--background-gray);
+    padding: 40px;
+    text-align: center;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+
+  .leftside {
+    height: 100%;
+    width: 30%;
+    flex-grow: 1;
+    margin: 64px 0px;
+  }
+  .music {
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    padding: 30px;
+  }
+  img {
+    vertical-align: middle;
+  }
+</style>
+
+<div class="header">
+  Thank you for watching!<br />I hope to see you next time.
+</div>
+
+<div class="leftside">
+  <div class="music">
+    <img
+      src="/bundles/owl-layout/graphics/elements/owl-bar-currently-playing/img/icon.png"
+    />
+    Sole Signal - Super Mario 64 "See You Next Time" OC ReMix
+  </div>
+</div>

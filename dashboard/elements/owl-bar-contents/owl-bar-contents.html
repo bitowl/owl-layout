@@ -1,14 +1,30 @@
-<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
-<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="/bundles/owl-nodecg-styles/dashboard/css/bitowl-theme.html">
+<link
+  rel="import"
+  href="../../../bower_components/paper-button/paper-button.html"
+/>
+<link
+  rel="import"
+  href="../../../bower_components/paper-input/paper-input.html"
+/>
+<link
+  rel="import"
+  href="../../../bower_components/paper-input/paper-textarea.html"
+/>
+<link
+  rel="import"
+  href="../../../bower_components/iron-icons/iron-icons.html"
+/>
+<link
+  rel="import"
+  href="/bundles/owl-nodecg-styles/dashboard/css/bitowl-theme.html"
+/>
 <dom-module id="owl-bar-contents">
-    <template>
-        <style include="bitowl-theme">
-            :host {}
+  <template>
+    <style include="bitowl-theme">
+      :host {
+      }
 
-            /*#show {
+      /*#show {
 				--paper-button: {
 					background-color: #5BA664;
 					color: white;
@@ -43,53 +59,56 @@
 				}
 			}*/
 
-            .contents {
-                height: 200px;
-                overflow-y: scroll;
-            }
-            .row {
-                display: flex;
-                margin-top: 16px;
-                align-items: center;
-            }
+      .contents {
+        height: 300px;
+        overflow-y: scroll;
+      }
+      .row {
+        display: flex;
+        margin-top: 16px;
+        align-items: center;
+      }
 
-            .options {
-                flex-grow: 1;
-                overflow: auto;
-            }
+      .options {
+        flex-grow: 1;
+        overflow: auto;
+      }
 
-            .type {
-                width: 70px;
-                min-width: 70px;
-                flex-grow: 0;
-            }
+      .type {
+        width: 70px;
+        min-width: 70px;
+        flex-grow: 0;
+      }
 
-            .button {
-                flex-grow: 0;
-                min-width: 50px;
-            }
-            .deleteButton {
-				--paper-button: {
-					background-color: #C9513E;
-					color: white;
+      .button {
+        flex-grow: 0;
+        min-width: 50px;
+      }
+      .deleteButton {
+        --paper-button: {
+          background-color: #c9513e;
+          color: white;
+        }
+      }
+    </style>
 
-				}
-			}
-        </style>
-
-
-        <div class="contents">
-            <template is="dom-repeat" items="[[contents]]" mutable-data>
-                <div class="row">
-                    <div class="type">[[item.type]]</div>
-                    <div class="options">[[_formatOptions(item.options)]]</div>
-                    <paper-button class="button nodecg-configure" on-tap="editContent"><iron-icon icon="icons:create"></iron-icon></paper-button>
-                    <paper-button class="button deleteButton nodecg-reject" on-tap="confirmDeleteContent"><iron-icon icon="icons:delete"></iron-icon></paper-button>
-                </div>
-            </template>
+    <div class="contents">
+      <template is="dom-repeat" items="[[contents]]" mutable-data>
+        <div class="row">
+          <div class="type">[[item.type]]</div>
+          <div class="options">[[_formatOptions(item.options)]]</div>
+          <paper-button class="button nodecg-configure" on-tap="(editContent)"
+            ><iron-icon icon="icons:create"></iron-icon
+          ></paper-button>
+          <paper-button
+            class="button deleteButton nodecg-reject"
+            on-tap="(confirmDeleteContent)"
+            ><iron-icon icon="icons:delete"></iron-icon
+          ></paper-button>
         </div>
+      </template>
+    </div>
+  </template>
 
-    </template>
-
-    <script src="owl-bar-contents.js"></script>
+  <script src="owl-bar-contents.js"></script>
 </dom-module>

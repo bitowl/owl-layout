@@ -124,7 +124,17 @@
         "height": 1080
       },
       {
+        "file": "background.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
         "file": "break.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "end.html",
         "width": 1920,
         "height": 1080
       }

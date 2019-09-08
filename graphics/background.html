@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="styles/base.css" />
+<link rel="import" href="styles/owl-style.html" />
+
+<style include="owl-style">
+  body {
+    --background-gray: #323334;
+    --neon-green: #c2ea21;
+
+    background: var(--background-gray);
+
+    display: flex;
+    flex-direction: column;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .buttons {
+    display: none;
+    position: absolute;
+  }
+
+  .buttons a {
+    display: inline-block;
+    color: #000;
+    background: #ccc;
+    padding: 5px;
+    margin: 5px;
+    text-decoration: none;
+  }
+
+  .buttons a:hover {
+    background: #bbb;
+  }
+
+  .buttons a:active {
+    background: #aaa;
+  }
+
+  .header {
+    width: 100%;
+    background: var(--neon-green);
+    /*position: absolute;
+        z-index: 2;*/
+    font-size: 50px;
+    color: var(--background-gray);
+    padding: 40px;
+    text-align: center;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<!--<div style="width: 100%; height: 200px; background: url(circuit_pattern_needs_change.png);"></div>-->
+<!--<div class="buttons">
+  <a href="javascript:connectTwoRandomConnectors()">Connect</a>
+  <a href="javascript:addRandomConnector()">Add random connector</a>
+  <a href="javascript:addRandomIC()">Add random IC</a>
+  <a href="javascript:forceMoveChunk()">Move chunk</a>
+  <a href="javascript:toggleCells()">Toggle draw cells</a>
+</div>
+
+<div class="header">Thank you for watching! <br />
+  I hope to see you next time.</div>-->
+
+<canvas id="circuit"></canvas>
+
+<script src="astar.js"></script>
+
+<script>
+  var GRID_SIZE = 24;
+  var GRID_WIDTH = -1;
+  var GRID_HEIGHT = -1;
+  var CHUNK_WIDTH = 10;
+  var CONNECTOR_SIZE = 8;
+
+  var SCROLL_X_PER_SECOND = 10;
+  var ACTIVE_LINES_GOAL = 5;
+
+  var canvas, ctx, width, height;
+  var grid;
+  var objects;
+  var lines;
+  var freeConnectors;
+  var offsetX = 50;
+  var newIcId = 0;
+
+  var lastTimestamp;
+  var lastFPSTimestamp;
+  var framesCounted = 0;
+
+  var graph;
+  var needToRebuildGraph = true;
+
+  // TMP
+  var moveChunkForced = false;
+  var shouldDrawCells = false;
+  // END TMP
+
+  var activeLines = 0;
+
+  window.onload = function() {
+    setupCanvas();
+    GRID_WIDTH = Math.ceil(width / GRID_SIZE) + CHUNK_WIDTH;
+    GRID_HEIGHT = Math.floor(height / GRID_SIZE);
+
+    setupGrid();
+    testAddObjects();
+
+    lastFPSTimestamp = lastTimestamp = Date.now();
+    draw();
+  };
+
+  function setupCanvas() {
+    canvas = document.getElementById("circuit");
+    ctx = canvas.getContext("2d");
+    console.log(canvas);
+    console.log(window.innerWidth, window.innerHeight);
+
+    /*canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;*/
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    width = canvas.width; //window.innerWidth;
+    height = canvas.height; //window.innerHeight;
+    console.log(width, height);
+    // canvas.width = width;
+    // canvas.height = height;
+
+    // TODO: handle resize of the canvas
+
+    ctx.lineWidth = 3;
+  }
+
+  function setupGrid() {
+    grid = Array(GRID_WIDTH)
+      .fill()
+      .map(() => Array(GRID_HEIGHT).fill(1));
+    objects = Array(GRID_WIDTH)
+      .fill()
+      .map(() => Array(GRID_HEIGHT));
+    lines = [];
+    freeConnectors = [];
+  }
+
+  function draw() {
+    countFPS();
+    var now = Date.now();
+    var deltaTime = (now - lastTimestamp) / 1000;
+    lastTimestamp = now;
+    // console.log(deltaTime);
+
+    connectTwoRandomConnectors();
+
+    activeLines = 0;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (line.progress < line.length) {
+        activeLines++;
+      }
+    }
+    // Try to connect more if there are less empty lines
+
+    for (let i = activeLines; i < ACTIVE_LINES_GOAL; i++) {
+      connectTwoRandomConnectors();
+    }
+
+    /*if (Math.random() < 0.1) {
+        addRandomConnector();
+    }*/
+    if (Math.random() < 0.05) {
+      addRandomIC();
+      connectTwoRandomConnectors();
+    }
+
+    moveLines();
+
+    offsetX -= SCROLL_X_PER_SECOND * deltaTime;
+    if (offsetX < -CHUNK_WIDTH * GRID_SIZE || moveChunkForced) {
+      // We can remove useless stuff and make more place
+      moveChunkForced = false;
+      moveEverythingByOneChunk();
+    }
+    // console.log(offsetX);
+    // canvas.style.transform = 'translate3d(' + offsetX + 'px, 0px, 0px)';
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    clearCanvas();
+    ctx.translate(offsetX, 0);
+
+    if (shouldDrawCells) {
+      drawCells();
+    }
+
+    ctx.strokeStyle = "#3F3F3F";
+    ctx.fillStyle = "#333"; // TODO: set to background color
+    // drawGrid();
+    drawObjects();
+    requestAnimationFrame(draw);
+  }
+
+  function moveLines() {
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (line.progress < line.length) {
+        line.progress += 0.1;
+        if (line.progress > line.length) {
+          line.progress = line.length;
+          // line finished
+          var lastPoint = line.segments[line.segments.length - 1];
+          if (lastPoint[0] > 0) {
+            // is still on screen
+            var obj = objects[lastPoint[0]][lastPoint[1]];
+            if (obj instanceof Connector) {
+              obj.startDrawing();
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function clearCanvas() {
+    ctx.clearRect(0, 0, width, height);
+  }
+
+  function drawGrid() {
+    // vertical
+    for (var x = GRID_SIZE; x < width; x += GRID_SIZE) {
+      drawLine(x, 0, x, height);
+    }
+
+    // horizontal
+    for (var y = GRID_SIZE; y < height; y += GRID_SIZE) {
+      drawLine(0, y, width, y);
+    }
+  }
+
+  function drawCells() {
+    for (let y = 0; y < GRID_HEIGHT; y++) {
+      for (let x = 0; x < GRID_WIDTH; x++) {
+        ctx.beginPath();
+        if (grid[x][y]) {
+          ctx.fillStyle = "rgba(0,255,0, 0.02)";
+        } else {
+          ctx.fillStyle = "rgba(255,0,0, 0.02)";
+        }
+        ctx.rect(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE - 3, GRID_SIZE - 3);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawObjects() {
+    for (let i = 0; i < lines.length; i++) {
+      lines[i].draw();
+    }
+
+    for (let y = 0; y < GRID_HEIGHT; y++) {
+      for (let x = 0; x < GRID_WIDTH; x++) {
+        var obj = objects[x][y];
+        if (obj !== undefined) {
+          obj.draw(x, y);
+        }
+      }
+    }
+  }
+
+  function drawLine(x1, y1, x2, y2) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+
+  // https://stackoverflow.com/a/3689926/9949742
+  function zeros(dimensions) {
+    var array = [];
+
+    for (var i = 0; i < dimensions[0]; ++i) {
+      array.push(dimensions.length == 1 ? 0 : zeros(dimensions.slice(1)));
+    }
+
+    return array;
+  }
+
+  function addObject(x, y, obj) {
+    if (obj instanceof Connector) {
+      if (!obj.isConnected) {
+        freeConnectors.push(obj);
+      }
+    }
+
+    objects[x][y] = obj;
+    grid[x][y] = 0;
+    needToRebuildGraph = true;
+  }
+
+  function addLine(line) {
+    for (let i = 0; i < line.segments.length; i++) {
+      const segment = line.segments[i];
+      grid[segment[0]][segment[1]] = 0;
+    }
+    lines.push(line);
+    needToRebuildGraph = true;
+  }
+
+  function findLine(x1, y1, x2, y2) {
+    if (needToRebuildGraph) {
+      graph = new Graph(grid, { diagonal: true });
+      needToRebuildGraph = false;
+    }
+
+    var start = graph.grid[x1][y1];
+    var end = graph.grid[x2][y2];
+    var result = astar.search(graph, start, end, {
+      heuristic: astar.heuristics.diagonal
+    });
+
+    if (result.length == 0) {
+      // console.warn('No line possible from ' + x1 + ', ' + y1 + ' to ' + x2 + ', ' + y2);
+      return null;
+    }
+    /*console.log(x1, y1);
+    console.log(x2, y2);
+
+     console.log(result);*/
+
+    var segments = [[x1, y1, 0]];
+
+    for (let i = 0; i < result.length; i++) {
+      const element = result[i];
+      var length = 1;
+      if (
+        (i > 0 &&
+          element.x != result[i - 1].x &&
+          element.y != result[i - 1].y) ||
+        (i == 0 && element.x != x1 && element.y != y1)
+      ) {
+        length = 1.41421;
+      }
+      segments.push([element.x, element.y, length]);
+    }
+    return segments;
+  }
+
+  function Connector(x, y) {
+    this.x = x;
+    this.y = y;
+    this.isConnected = false;
+    // this.constrainRandomX = null;
+    // this.constrainRandomY = null;
+    this.constrainOnlyNorth = false;
+    this.constrainOnlySouth = false;
+    this.constrainOnlyWest = false;
+    this.constrainOnlyEast = false;
+    this.isDrawing = false;
+    this.progress = 0;
+    this.icNum = -1; // TODO don't (or not often) connect to same IC. At least not to directly ajacent (?)
+  }
+
+  Connector.prototype.draw = function(x, y) {
+    if (this.isDrawing) {
+      ctx.beginPath();
+      if (this.progress < 1) {
+        this.progress += 0.1;
+      }
+      ctx.arc(
+        x * GRID_SIZE + GRID_SIZE / 2,
+        y * GRID_SIZE + GRID_SIZE / 2,
+        this.progress * CONNECTOR_SIZE,
+        0,
+        2 * Math.PI
+      );
+      ctx.fill();
+      ctx.stroke();
+    }
+  };
+
+  Connector.prototype.startDrawing = function() {
+    this.isDrawing = true;
+    if (this.icNum != -1) {
+      // Start showing all connectors for this IC
+      for (let y = 0; y < GRID_HEIGHT; y++) {
+        for (let x = 0; x < GRID_WIDTH; x++) {
+          var obj = objects[x][y];
+          if (obj instanceof Connector) {
+            if (obj.icNum == this.icNum) {
+              obj.isDrawing = true;
+            }
+          }
+        }
+      }
+    }
+  };
+
+  Connector.prototype.fulfillsConstraints = function(x, y) {
+    if (this.constrainOnlyWest && this.x - 1 <= x) {
+      return false;
+    }
+    if (this.constrainOnlyEast && this.x + 1 >= x) {
+      return false;
+    }
+    if (this.constrainOnlyNorth && this.y + 1 >= y) {
+      return false;
+    }
+    if (this.constrainOnlySouth && this.y - 1 <= y) {
+      return false;
+    }
+    return true;
+  };
+
+  function Empty() {}
+
+  Empty.prototype.draw = function(x, y) {
+    /*ctx.beginPath();
+    ctx.arc(x * GRID_SIZE + GRID_SIZE / 2, y * GRID_SIZE + GRID_SIZE / 2, CONNECTOR_SIZE, 0, Math.PI);
+    ctx.stroke();*/
+  };
+
+  function Line(segments) {
+    // console.log(segments);
+    this.segments = segments;
+    this.length = 0;
+    this.progress = 0;
+    for (let i = 0; i < segments.length; i++) {
+      this.length += segments[i][2];
+    }
+  }
+
+  Line.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.moveTo(
+      gridCenterToPx(this.segments[0][0]),
+      gridCenterToPx(this.segments[0][1])
+    );
+
+    var pathLength = 0;
+
+    for (let i = 1; i < this.segments.length; i++) {
+      const segment = this.segments[i];
+
+      if (pathLength + segment[2] <= this.progress) {
+        // we can render the whole path
+        ctx.lineTo(gridCenterToPx(segment[0]), gridCenterToPx(segment[1]));
+        pathLength += segment[2];
+      } else {
+        // only render part of this segment
+
+        var remaining = this.progress - pathLength;
+        var percent = remaining / segment[2];
+
+        var x =
+          (1 - percent) * gridCenterToPx(this.segments[i - 1][0]) +
+          percent * gridCenterToPx(segment[0]);
+        var y =
+          (1 - percent) * gridCenterToPx(this.segments[i - 1][1]) +
+          percent * gridCenterToPx(segment[1]);
+        ctx.lineTo(x, y);
+        break;
+      }
+    }
+    ctx.stroke();
+  };
+
+  function gridToPx(x) {
+    return x * GRID_SIZE;
+  }
+  function gridCenterToPx(x) {
+    return x * GRID_SIZE + GRID_SIZE / 2;
+  }
+
+  function testAddObjects() {
+    /*addObject(0, 0, new Connector());
+    addObject(2, 2, new Connector());
+    addObject(2, 3, new Connector());
+    addObject(2, 4, new Connector());
+    addObject(3, 3, new Empty());
+
+    
+    var seg = findLine(2, 2, 5, 1);
+    addObject(0, 0, new Line(seg));
+    addObject(5, 6, new Connector());*/
+    /* var icCount = randomInt(2, 10);
+ 
+ 
+     for (let i = 0; i < icCount; i++) {   
+         addRandomIC();
+     }*/
+    /* for (let i = 0; i < 30; i++) {
+        connectTwoRandomConnectors();
+    }*/
+    /*var seg = findLine(5,5,6,6);
+    addLine(new Line(seg));
+    var seg = findLine(5,6,6,5);
+    addLine(new Line(seg));*/
+  }
+
+  function addRandomConnector() {
+    var x = randomX();
+    var y = randomY();
+    if (isFree(x, y)) {
+      addObject(x, y, new Connector(x, y));
+    }
+  }
+
+  function addRandomIC() {
+    var width = randomInt(2, 6);
+    var height = randomInt(2, 6);
+
+    if (width == 2 && height == 2) {
+      // rather have "resistors" instead of 2x2 buttons
+      if (Math.random() < 0.5) {
+        width = 1;
+      } else {
+        height = 1;
+      }
+    }
+
+    var x = randomInt(0, GRID_WIDTH - width);
+    var y = randomInt(0, GRID_HEIGHT - height);
+    if (isAreaFree(x - 1, y - 1, width + 2, height + 2)) {
+      addIC(x, y, width, height);
+    } else {
+      // console.log("waah");
+    }
+
+    // TODO: immediately try to connect from all IC ports to somewhere
+  }
+
+  function randomX() {
+    return Math.floor(Math.random() * GRID_WIDTH);
+  }
+  function randomY() {
+    return Math.floor(Math.random() * GRID_HEIGHT);
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  function isFree(x, y) {
+    // console.log(x, y);
+    return grid[x][y] == 1;
+  }
+
+  function isAreaFree(startX, startY, width, height) {
+    // console.log(startX, startY, width, height);
+    for (
+      let y = Math.max(0, startY);
+      y < Math.min(startY + height, GRID_HEIGHT);
+      y++
+    ) {
+      for (
+        let x = Math.max(0, startX);
+        x < Math.min(startX + width, GRID_WIDTH);
+        x++
+      ) {
+        if (!isFree(x, y)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  function connectTwoRandomConnectors() {
+    if (freeConnectors.length < 2) {
+      return; // Not enough free connectors
+    }
+    var connector = popRandomFreeConnector();
+    connectToRandomConnector(connector);
+  }
+
+  function connectToRandomConnector(connector) {
+    if (freeConnectors.length < 1) {
+      return; // Not enough free connectors
+    }
+    var connector2 = popRandomFreeConnector();
+
+    if (
+      connector.icNum == connector2.icNum || // don't connect when on the same IC // TODO not always?
+      !connector.fulfillsConstraints(connector2.x, connector2.y) || // check constraints of both connectors
+      !connector2.fulfillsConstraints(connector.x, connector.y)
+    ) {
+      freeConnectors.push(connector2);
+
+      // if (Math.random() < 1/(activeLines+1)) {    // Don't create too many lose ends
+      //                                           // But if there are no active lines, create more of these
+
+      var chance = Math.max(
+        0.4,
+        (ACTIVE_LINES_GOAL - activeLines) / ACTIVE_LINES_GOAL
+      );
+      if (Math.random() < chance) {
+        tryToConnectWithRandom(connector);
+      }
+
+      return;
+    }
+
+    /*var possibleX = randomX();
+    var possibleY = randomY();
+
+    if (connector.constrainRandomX != null) {
+        possibleX = connector.constrainRandomX();
+    }
+    if (connector.constrainRandomY != null) {
+        possibleY = connector.constrainRandomY();
+    }*/
+    // set the goal field to be free for pathfinding to work
+    var segments = getSegments(connector, connector2);
+    if (segments == null) {
+      // No connection possible :(
+      freeConnectors.push(connector);
+      freeConnectors.push(connector2);
+      return;
+    }
+    actuallyConnect(connector, connector2, segments);
+  }
+
+  function tryToConnectWithRandom(connector) {
+    // try to find a random spot near the first one
+    // this creates more local patches and limits the long lines to be IC2IC ones
+    var RANGE = 8;
+    var x = Math.min(
+      Math.max(randomInt(connector.x - RANGE, connector.x + RANGE), 0),
+      GRID_WIDTH - 1
+    );
+    var y = Math.min(
+      Math.max(randomInt(connector.y - RANGE, connector.y + RANGE), 0),
+      GRID_HEIGHT - 1
+    );
+
+    if (!isFree(x, y) || !connector.fulfillsConstraints(x, y)) {
+      freeConnectors.push(connector);
+      return;
+    }
+    var segments = getSegments(connector, { x: x, y: y });
+    if (segments == null) {
+      freeConnectors.push(connector);
+      return;
+    }
+    var connector2 = new Connector(x, y);
+    connector2.isConnected = true;
+    addObject(x, y, connector2);
+    actuallyConnect(connector, connector2, segments);
+  }
+
+  function getSegments(connector, connector2) {
+    var segments = findLine(
+      connector.x,
+      connector.y,
+      connector2.x,
+      connector2.y
+    );
+    return segments;
+  }
+
+  function actuallyConnect(connector, connector2, segments) {
+    objects[connector.x][connector.y].isConnected = true;
+    objects[connector.x][connector.y].startDrawing();
+
+    objects[connector2.x][connector2.y].isConnected = true;
+
+    addLine(new Line(segments));
+  }
+
+  function popRandomFreeConnector() {
+    var index = Math.floor(Math.random() * freeConnectors.length);
+    var result = freeConnectors[index];
+    freeConnectors.splice(index, 1);
+    return result;
+  }
+
+  function addIC(startX, startY, width, height) {
+    for (let y = startY; y < startY + height; y++) {
+      for (let x = startX; x < startX + width; x++) {
+        if (
+          x == startX ||
+          y == startY ||
+          x == startX + width - 1 ||
+          y == startY + height - 1
+        ) {
+          var con = new Connector(x, y);
+          // con.isDrawing = true;
+          con.icNum = newIcId;
+          // con.progress = 1;
+          if (x == startX) {
+            con.constrainOnlyWest = true;
+            //con.constrainRandomX = function () { return randomInt(0, startX); }
+          }
+          if (y == startY) {
+            con.constrainOnlySouth = true;
+            // con.constrainRandomY = function () { return randomInt(0, startY); }
+          }
+          if (x == startX + width - 1) {
+            con.constrainOnlyEast = true;
+            // con.constrainRandomX = function () { return randomInt(startX + width, GRID_WIDTH); }
+          }
+          if (y == startY + height - 1) {
+            con.constrainOnlyNorth = true;
+            // con.constrainRandomY = function () { return randomInt(startY + height, GRID_HEIGHT); }
+          }
+
+          addObject(x, y, con);
+        } else {
+          addObject(x, y, new Empty());
+        }
+      }
+    }
+
+    newIcId++;
+  }
+
+  function moveEverythingByOneChunk() {
+    // console.log('chunk');
+    var newGrid = Array(GRID_WIDTH)
+      .fill()
+      .map(() => Array(GRID_HEIGHT).fill(1));
+    var newObjects = Array(GRID_WIDTH)
+      .fill()
+      .map(() => Array(GRID_HEIGHT));
+    var newLines = [];
+    var newFreeConnectors = [];
+
+    // GRID & OBJECTS
+    for (let y = 0; y < GRID_HEIGHT; y++) {
+      for (let x = CHUNK_WIDTH; x < GRID_WIDTH; x++) {
+        newGrid[x - CHUNK_WIDTH][y] = grid[x][y];
+        newObjects[x - CHUNK_WIDTH][y] = objects[x][y];
+      }
+    }
+
+    // LINES
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      var isVisible = false;
+      for (let j = 0; j < line.segments.length; j++) {
+        const segment = line.segments[j];
+        segment[0] -= CHUNK_WIDTH;
+        if (segment[0] > 0) {
+          isVisible = true;
+        }
+      }
+      if (isVisible) {
+        newLines.push(line);
+      }
+    }
+
+    // FREE CONNECTORS
+    for (let i = 0; i < freeConnectors.length; i++) {
+      const con = freeConnectors[i];
+      con.x -= CHUNK_WIDTH;
+      if (con.x > 0) {
+        newFreeConnectors.push(con);
+      }
+    }
+
+    grid = newGrid;
+    needToRebuildGraph = true;
+    objects = newObjects;
+    lines = newLines;
+    freeConnectors = newFreeConnectors;
+    offsetX += CHUNK_WIDTH * GRID_SIZE;
+  }
+
+  function forceMoveChunk() {
+    moveChunkForced = true;
+  }
+
+  function toggleCells() {
+    shouldDrawCells = !shouldDrawCells;
+  }
+
+  function countFPS() {
+    framesCounted++;
+    if (Date.now() - lastFPSTimestamp > 1000) {
+      lastFPSTimestamp += 1000;
+      console.log("FPS: " + framesCounted);
+      framesCounted = 0;
+    }
+  }
+</script>
